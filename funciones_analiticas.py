@@ -8,25 +8,25 @@
 
 # -----------------------------------------------------------------------------------------
 
-def suma_n_de_nfn(fn):
+def suma_n_de_nfn(fn, n_max):
     sum = 0
     n = 1
-    while fn(n) != 0:
+    while n <= n_max:
         sum += n * fn(n)
         n += 1
     return sum
 
-def cantidad_de_nodos(fn, Q):
+def cantidad_de_nodos(fn, Q, n_max):
     sum = 0
     n = 1
-    while fn(n) != 0:
+    while n <= n_max:
         sum += n * fn(n)
         n += 1
     return sum * Q   
 
-def distribucion_de_grado(g, fn, gamma):
-    A = gamma * g * fn(g) / suma_n_de_nfn(fn)
-    B = (1-gamma) * (g + 1) * fn(g + 1) / suma_n_de_nfn(fn)
+def distribucion_de_grado(g, fn, gamma, n_max):
+    A = gamma * g * fn(g) / suma_n_de_nfn(fn, n_max)
+    B = (1-gamma) * (g + 1) * fn(g + 1) / suma_n_de_nfn(fn, n_max)
     return A + B
 
 def coef_clustering_local(red, nodo):
@@ -37,26 +37,26 @@ def coef_clustering_local(red, nodo):
     else:
         return 1.0
 
-def coef_clustering_medio(fn, gamma):
+def coef_clustering_medio(fn, gamma, n_max):
     sum = 0
     n = 1
-    while fn(n) != 0:
+    while n <= n_max:
         sum += (n - 2 * gamma) * fn(n)
         n += 1
          
-    return sum / suma_n_de_nfn(fn)
+    return sum / suma_n_de_nfn(fn, n_max)
 
 
-def coef_clustering_global(fn, gamma):
+def coef_clustering_global(fn, gamma, n_max):
     sum1 = 0
     n = 1
-    while fn != 0:
+    while n <= n_max:
         sum1 += n * (n-1) * (n-2) * fn(n)
         n += 1
 
     sum2 = 0
     n = 1
-    while fn != 0:
+    while n <= n_max:
         sum2 += n * (n-1) * fn(n)
         n += 1
 
