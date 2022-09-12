@@ -39,7 +39,8 @@ def coef_clustering_local(red, nodo):
 
 def coef_clustering_medio(fn, gamma, n_max):
     sum = 0
-    n = 1
+    # n = 1 ########################################################### Posiblemente el error sea haber empezado en n == 1
+    n = 3
     while n <= n_max:
         sum += (n - 2 * gamma) * fn(n)
         n += 1

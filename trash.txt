@@ -1,0 +1,44 @@
+##########################################################################################	PRIMER ALGORITMO CORREGIDO:
+
+np.random.shuffle(aux_node_list)
+
+while len(aux_node_list) > 1:
+    G = self.red_total_cliques_conectados.subgraph(aux_node_list) # revisar si vale la pena esta linea
+    if nx.number_connected_components(G) == 1:
+        break
+
+    nodo0 = aux_node_list[0]
+    nodo1 = aux_node_list[1]
+
+    while self.red_total_cliques_conectados.has_edge(nodo0, nodo1):
+        np.random.shuffle(aux_node_list)
+        nodo0 = aux_node_list[0]
+        nodo1 = aux_node_list[1]         
+
+    self.red_total_cliques_conectados.add_edge(nodo0, nodo1)
+    aux_node_list.remove(nodo0)
+    aux_node_list.remove(nodo1)
+    self.red_total_cliques_conectados.nodes()[nodo0]["ext_connection"] = True
+    self.red_total_cliques_conectados.nodes()[nodo1]["ext_connection"] = True
+
+
+##########################################################################################	PRIMER ALGORITMO:
+
+while len(aux_node_list) > 1:
+    G = self.red_total_cliques_conectados.subgraph(aux_node_list)
+    if nx.number_connected_components(G) == 1:
+        break
+
+    random_i = np.random.randint(0, len(aux_node_list))
+    random_j = np.random.randint(0, len(aux_node_list))
+    while random_j == random_i:
+        random_j = np.random.randint(0, len(aux_node_list))
+
+    nodoi = aux_node_list[random_i]
+    nodoj = aux_node_list[random_j]               
+    if not self.red_total_cliques_conectados.has_edge(nodoi, nodoj):
+        self.red_total_cliques_conectados.add_edge(nodoi, nodoj)
+        aux_node_list.remove(nodoi)
+        aux_node_list.remove(nodoj)
+        self.red_total_cliques_conectados.nodes()[nodoi]["ext_connection"] = True
+        self.red_total_cliques_conectados.nodes()[nodoj]["ext_connection"] = True
